@@ -13,3 +13,10 @@
 3. install React App 
 4. Create account Github
  
+
+# keyword
+ - JSX
+ - Element
+ - Components
+ - Props
+ - State
