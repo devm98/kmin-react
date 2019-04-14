@@ -96,7 +96,7 @@ componentDidMount = () =>{
     cursor: 'pointer',
   }
   const modelBody = {
-    background: 'lightblue',
+    background: '#003366',
   }
 const changeColor = value => {
   if (value > 0) return 'green'
