@@ -2,7 +2,11 @@ import React from 'react'
 
 
 class Counter extends React.Component {
-  state = { value: 0, delta: 1, autoIncreaseOn : true }
+  state = { 
+    value: 0, 
+    name: this.props.name,
+    delta: this.props.initailDelta, 
+    autoIncreaseOn : this.props.initailAuto }
   interval = null
   // tang = () =>{
   //     const currentValue = this.state.value
@@ -54,6 +58,7 @@ componentDidMount = () =>{
     const value = this.state.value
     return (
       <div style={modelBody}>
+      <div>{this.state.name}</div>
         <div style={{color: 'white'}}>
           Current value:{' '}
           <span style={{ color: changeColor(value) }}>{value}</span>
@@ -91,7 +96,7 @@ componentDidMount = () =>{
     cursor: 'pointer',
   }
   const modelBody = {
-    background: 'black',
+    background: 'lightblue',
   }
 const changeColor = value => {
   if (value > 0) return 'green'

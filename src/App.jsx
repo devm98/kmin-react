@@ -11,7 +11,9 @@ class App extends React.Component{
   render() {
     return (
       <div>
-        {this.state.showCounter ? <Counter /> : null}
+        {this.state.showCounter ? <Counter name="Couter 1" initailAuto={true} initailDelta={4}/> : null}
+        {this.state.showCounter ? <Counter name="Couter 2" initailAuto={false} initailDelta={10}/> : null}
+
         <button style={{
           background: 'red',
           borderRadius: 5,
@@ -22,7 +24,8 @@ class App extends React.Component{
           margin: '10px',
           outline: 'none',
           cursor: 'pointer',
-        }} onClick={this.handleToggleCounter}>{this.state.showCounter ? 'Hide' : 'Show'}</button>
+        }} onClick={this.handleToggleCounter}>{this.state.showCounter ? 'Hide' : 'Show'}
+        </button>
       </div>
     )
     
