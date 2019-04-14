@@ -2,7 +2,7 @@ import React from 'react'
 
 
 class Counter extends React.Component {
-  state = { value: 0, delta: 0, autoIncreaseOn : false }
+  state = { value: 0, delta: 1, autoIncreaseOn : true }
   interval = null
   // tang = () =>{
   //     const currentValue = this.state.value
@@ -43,6 +43,10 @@ class Counter extends React.Component {
   }
 componentDidMount = () =>{
   console.log("componentDiMount")
+  if(this.state.autoIncreaseOn){
+    this.interval = setInterval(()=>{
+      this.upDateValue()
+    }, 500)}
 }
 
   render() {
@@ -70,9 +74,10 @@ componentDidMount = () =>{
           </button>
       </div>
     )
-  }
+    }
   componentWillUnmount = () =>{
     console.log('componentWill..')
+    clearInterval(this.interval)
   }
 }
   const modelBtn = {

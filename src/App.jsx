@@ -25,6 +25,7 @@ class App extends React.Component{
         }} onClick={this.handleToggleCounter}>{this.state.showCounter ? 'Hide' : 'Show'}</button>
       </div>
     )
+    
   }
 }
 
