@@ -3,17 +3,26 @@ import React from 'react'
 import Counter from './Counter'
 
 class App extends React.Component{
-  state = {showCounter: true}
+  state = {showCounter: true,
+  delta: 1,}
 
   handleToggleCounter = () =>{
     this.setState({showCounter: !this.state.showCounter})
   }
+  handleDeltaChange = nextDelta =>{
+    this.setState({delta: nextDelta})
+  }
   render() {
     return (
       <div>
-        {this.state.showCounter ? <Counter name="Couter 1" initailAuto={true} initailDelta={4}/> : null}
-        {this.state.showCounter ? <Counter name="Couter 2" initailAuto={false} initailDelta={10}/> : null}
-
+        {this.state.showCounter ? 
+        (<div>
+          <Counter name="Couter 1" initailAuto={false}  delta={this.state.delta} onDeltaChange={this.handleDeltaChange}
+        />
+        <Counter name="Couter 2" initailAuto={false}  delta={this.state.delta} onDeltaChange={this.handleDeltaChange}
+        />
+      </div>
+        ) : null}
         <button style={{
           background: 'red',
           borderRadius: 5,

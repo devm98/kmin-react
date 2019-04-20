@@ -23,12 +23,15 @@ class Counter extends React.Component {
 
   handleValueChange = delta => {
     const currentValue = this.state.value
-    this.setState({ value: currentValue + delta })
+    this.setState({ value: currentValue + this.props.delta })
   }
-  handleDeltaChange = delta1 => {
-    const currentDelta = this.state.delta
-    this.setState({ delta: currentDelta + delta1 })
-  }
+
+  handleDeltaChange = delta1 =>
+    this.props.onDeltaChange(this.props.delta + delta1)
+  // handleDeltaChange = delta1 => {
+  //   const currentDelta = this.state.delta
+  //   this.setState({ delta: currentDelta + delta1 })
+  // }
   autoIncrease = () =>{
     this.setState({ autoIncreaseOn: !this.state.autoIncreaseOn}, ()=>{
       if(this.state.autoIncreaseOn){
@@ -41,7 +44,7 @@ class Counter extends React.Component {
     })
   }
   upDateValue = () => {
-    const currentDelta = this.state.delta
+    const currentDelta = this.props.delta
     const currentValue = this.state.value
     this.setState({ value: currentDelta + currentValue })
   }
@@ -64,19 +67,19 @@ componentDidMount = () =>{
           <span style={{ color: changeColor(value) }}>{value}</span>
         </div>
         <div>
-          <div>
-            <button style={modelBtn} onClick={this.reset}>Reset</button>
-          </div>
+          
+          <button style={modelBtn} onClick={this.reset}>Reset</button>
+          
           <button style={modelBtn} onClick={() => this.handleValueChange(1)}>Up</button>
           <button style={modelBtn} onClick={() => this.handleValueChange(-1)}>Down</button>
-          <div style={{color: 'white'}}>Delta: {this.state.delta} </div>
+          <div style={{color: 'white'}}>Delta: {this.props.delta} </div>
           <button style={modelBtn} onClick={() => this.handleDeltaChange(1)}>Up</button>
           <button style={modelBtn} onClick={() => this.handleDeltaChange(-1)}>Down</button>
-        </div>
         <button style={modelBtn} onClick={this.upDateValue}>Update</button>
         <button style={modelBtn} onClick={this.autoIncrease}>
             {this.state.autoIncreaseOn ? 'Stop' : 'Start'} Auto Increase
           </button>
+        </div>
       </div>
     )
     }
