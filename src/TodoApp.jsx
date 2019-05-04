@@ -18,34 +18,49 @@ export default class TodoApp extends React.Component {
           value: taskValue, checked: false,
           id: Date.now(),
           listIdx: this.state.selectedListIdx,
+          checked: false,
         },
       ]
     )
     this.setState({ tasks: nextTasks })
   }
-  handleTaskToggleChecked = (taksIdx, checked) => {
-    const currentTask = this.state.tasks
 
-    currentTask[taksIdx].checked = checked
+  handleTaskToggleChecked = (taskId, checked) => {
+    const {tasks} = this.state
 
-    this.setState({ tasks: currentTask })
+    const checkedTaskIdx = tasks.findIndex(task => task.id === taskId)
+
+    tasks[checkedTaskIdx].checked = checked
+    this.setState({tasks})
   }
-  handleTaskRemove = taskIdx => {
-    const currentTasks = this.state.tasks
 
-    currentTasks.splice(taskIdx, 1)
+  handleTaskRemove = taskId => {
+    const { tasks } = this.state
 
-    this.setState({ tasks: currentTasks })
+    const removedTaskIdx = tasks.findIndex(task => task.id === taskId)
+    tasks.splice(removedTaskIdx, 1)
+
+    this.setState({ tasks })
   }
+
   handleAddList = () => {
     this.setState({ listCount: this.state.listCount + 1 })
   }
+  handleRemoveList = () => {
+    this.setState({ listCount: this.state.listCount - 1 })
+    if(this.state.listCount <= 1){
+      alert('Stop !')
+      this.setState({ listCount: this.state.listCount = 1 })
+    }
+  }
+
   handleSelectList = idx => {
     this.setState({ selectedListIdx: idx })
   }
 
   render() {
-    const checkedTasksCount = this.state.tasks.filter(task => task.checked).length // loc ra task đã check
+    const tasks = this.state.tasks.filter(task => task.listIdx === this.state.selectedListIdx, ) 
+    const checkedTasksCount = tasks.filter(task => task.checked).length
     return (
       <div>
         <h1 style={{ marginBottom: 24 }}>Todo App</h1>
@@ -53,34 +68,40 @@ export default class TodoApp extends React.Component {
         <ul>
           {new Array(this.state.listCount).fill('').map((val, idx) => (
             <li key={idx} onClick={() => this.handleSelectList(idx)} style={{
-              fontWeight:
-                idx === this.state.selectedListIdx ? 'bold' : 'normal',
+              fontWeight: idx === this.state.selectedListIdx ? 'bold' : 'normal',
               cursor: 'pointer',
             }}>
               List {idx + 1}
             </li>
           ))
           }
-          <button onClick={this.handleAddList}>Add list</button>
+          <div style={{
+            position: 'absolute',
+            left: '200px',
+            top: '70px'
+          }}>
+            <button onClick={this.handleAddList}>Add list</button>
+            <button onClick={this.handleRemoveList}>Remove list</button>
+          </div>
         </ul>
         <TaskInput onTaskSubmit={this.handleTaskSubmit} />
-        {this.state.tasks.length ? (
+        {tasks.length ? (
           <div>
-            Checked: {checkedTasksCount}/{this.state.tasks.length}{' '}
-            {checkedTasksCount === this.state.tasks.length ? 'Done!' : null}
+            Checked: {checkedTasksCount}/{tasks.length}{' '}
+            {checkedTasksCount === tasks.length ? 'Done!' : null}
           </div>
         ) : (
             'No tasks yet!'
           )}
         <div style={{ marginTop: 24 }}>
           {
-            this.state.tasks.map((task, idx) => (
+            tasks.map((task, idx) => (
               <TaskItem
                 task={task}
                 key={idx}
                 checked={task.checked}
-                onToggleChecked={checked => this.handleTaskToggleChecked(idx, checked)}
-                onRemove={() => this.handleTaskRemove(idx)}
+                onToggleChecked={checked => this.handleTaskToggleChecked(task.id, checked)}
+                onRemove={() => this.handleTaskRemove(task.id)}
               />
             ))
           }

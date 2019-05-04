@@ -16,8 +16,6 @@ export default class TaskInput extends Component {
       this.setState({ value: '' })
     }
   }
-  
-
   render() {
     return (
       <div>
