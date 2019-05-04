@@ -66,14 +66,17 @@ export default class TodoApp extends React.Component {
         <h1 style={{ marginBottom: 24 }}>Todo App</h1>
 
         <ul>
-          {new Array(this.state.listCount).fill('').map((val, idx) => (
+          {new Array(this.state.listCount).fill('').map((val, idx) => {
+            const tasks = this.state.tasks.filter(task => task.listIdx === idx, ) 
+            const checkedTasksCount = tasks.filter(task => task.checked).length
+            return(
             <li key={idx} onClick={() => this.handleSelectList(idx)} style={{
               fontWeight: idx === this.state.selectedListIdx ? 'bold' : 'normal',
               cursor: 'pointer',
             }}>
-              List {idx + 1}
+              List {idx + 1} {checkedTasksCount}/{tasks.length}{' '}
             </li>
-          ))
+          )})
           }
           <div style={{
             position: 'absolute',
