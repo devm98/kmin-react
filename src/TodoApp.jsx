@@ -33,6 +33,8 @@ export default class TodoApp extends React.Component {
 
     this.setState({ tasks: currentTasks })
   }
+
+
   render() {
     const checkedTasksCount = this.state.tasks.filter(task => task.checked).length // loc ra task đã check
     return (
@@ -45,8 +47,8 @@ export default class TodoApp extends React.Component {
             {checkedTasksCount === this.state.tasks.length ? 'Done!' : null}
           </div>
         ) : (
-          'No tasks yet!'
-        )}
+            'No tasks yet!'
+          )}
         <div style={{ marginTop: 24 }}>
           {
             this.state.tasks.map((task, idx) => (
@@ -54,9 +56,9 @@ export default class TodoApp extends React.Component {
                 task={task}
                 key={idx}
                 checked={task.checked}
-                onToggleChecked={checked => this.handleTaskToggleChecked(idx, checked)} 
+                onToggleChecked={checked => this.handleTaskToggleChecked(idx, checked)}
                 onRemove={() => this.handleTaskRemove(idx)}
-                />
+              />
             ))
           }
         </div>
